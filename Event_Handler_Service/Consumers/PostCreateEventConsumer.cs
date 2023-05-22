@@ -36,8 +36,6 @@ namespace Event_Handler_Service.Consumers
             var json = Encoding.UTF8.GetString(body.ToArray());
             var postCreateEvent = JsonSerializer.Deserialize<PostCreateEvent>(json);
 
-            string hello = _configuration["MongoDB:ConnectionString"];
-
             Post result = new Post
             {
                 Id = postCreateEvent.Id,
