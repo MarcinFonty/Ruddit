@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content_Managment_Service", "Content_Managment_Service\Content_Managment_Service.csproj", "{5AFF56B6-795B-4FE8-808E-4D188A661CF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content_Managment_Service", "Content_Managment_Service\Content_Managment_Service.csproj", "{5AFF56B6-795B-4FE8-808E-4D188A661CF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feed_Service", "Feed_Service\Feed_Service.csproj", "{424215C8-FEA7-4BA4-97F4-A241779BB3DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event_Handler_Service", "Event_Handler_Service\Event_Handler_Service.csproj", "{8FC81243-5C35-4CC7-A7F8-BCC8570E4D38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{26610351-10AD-4EC7-9BEB-EC93705C7992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{5AFF56B6-795B-4FE8-808E-4D188A661CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AFF56B6-795B-4FE8-808E-4D188A661CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AFF56B6-795B-4FE8-808E-4D188A661CF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424215C8-FEA7-4BA4-97F4-A241779BB3DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424215C8-FEA7-4BA4-97F4-A241779BB3DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424215C8-FEA7-4BA4-97F4-A241779BB3DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424215C8-FEA7-4BA4-97F4-A241779BB3DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC81243-5C35-4CC7-A7F8-BCC8570E4D38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC81243-5C35-4CC7-A7F8-BCC8570E4D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC81243-5C35-4CC7-A7F8-BCC8570E4D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC81243-5C35-4CC7-A7F8-BCC8570E4D38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26610351-10AD-4EC7-9BEB-EC93705C7992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26610351-10AD-4EC7-9BEB-EC93705C7992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26610351-10AD-4EC7-9BEB-EC93705C7992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26610351-10AD-4EC7-9BEB-EC93705C7992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

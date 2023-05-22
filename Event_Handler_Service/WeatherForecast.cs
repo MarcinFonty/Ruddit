@@ -1,4 +1,4 @@
-namespace Content_Managment_Service
+namespace Event_Handler_Service
 {
     public class WeatherForecast
     {

@@ -4,14 +4,14 @@
     "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj": {}
   },
   "projects": {
-    "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj": {
+    "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj",
-        "projectName": "Content_Managment_Service",
-        "projectPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj",
+        "projectUniqueName": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\Common.csproj",
+        "projectName": "Common",
+        "projectPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\Common.csproj",
         "packagesPath": "C:\\Users\\School\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\obj\\",
+        "outputPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\School\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,7 +39,82 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj",
+        "projectName": "Content_Managment_Service",
+        "projectPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj",
+        "packagesPath": "C:\\Users\\School\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\School\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Common\\Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
+            "EventStore.Client.Grpc.Streams": {
+              "target": "Package",
+              "version": "[23.0.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
