@@ -1,4 +1,4 @@
-namespace MonolithicAPI
+namespace Content_Managment_Service
 {
     public class WeatherForecast
     {

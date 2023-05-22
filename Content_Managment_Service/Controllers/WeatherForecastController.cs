@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MonolithicAPI.Controllers
+namespace Content_Managment_Service.Controllers
 {
     [ApiController]
     [Route("[controller]")]
