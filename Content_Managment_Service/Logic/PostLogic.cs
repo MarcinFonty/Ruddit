@@ -1,4 +1,5 @@
-﻿using Content_Managment_Service.Entity;
+﻿using Content_Managment_Service.Commands;
+using Content_Managment_Service.Entity;
 using MediatR;
 
 namespace Content_Managment_Service.Logic
@@ -15,7 +16,18 @@ namespace Content_Managment_Service.Logic
         {
             post.Id = Guid.NewGuid();
             post.CreatedDate = DateTime.Now;
-            _mediator.Publish(post);
+
+            var command = new CreatePostCommand 
+            { 
+                Id = post.Id,
+                CreatedDate = DateTime.Now,
+                Author = post.Author,
+                ImagePath = post.ImagePath,
+                Description = post.Description,
+                Title = post.Title,
+            };
+
+            _mediator.Send(command);
         }
     }
 }
