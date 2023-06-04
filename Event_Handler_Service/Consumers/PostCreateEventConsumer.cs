@@ -42,7 +42,7 @@ namespace Event_Handler_Service.Consumers
             var mongoClient = new MongoClient(_configuration["MongoDB:ConnectionString"]);
             var mongoDatabase = mongoClient.GetDatabase(_configuration["MongoDB:DatabaseName"]);
 
-            var collection = mongoDatabase.GetCollection<PostModel>("Posts");
+            var collection = mongoDatabase.GetCollection<PostModel>("Posts");  //TODO: Should have a better way to provide the collection name
             collection.InsertOne(result);
 
             Model.BasicAck(deliveryTag, false);
