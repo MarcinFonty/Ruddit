@@ -1,0 +1,62 @@
+version: '3'
+services:
+  s6content-service:
+    image: s6content-service
+    ports:
+      - 7278:7278
+    networks:
+      - s6network
+    depends_on:
+      - rabbit-server
+      - event-store-db-node
+      - view-db-mongo
+
+  s6event-handler-service:
+    image: s6event-handler-service
+    ports:
+      - 7152:7152
+    networks:
+      - s6network
+    depends_on:
+      - rabbit-server
+      - event-store-db-node
+      - view-db-mongo
+
+  s6feed-service:
+    image: s6feed-service
+    ports:
+      - 7247:7247
+    networks:
+      - s6network
+    depends_on:
+      - rabbit-server
+      - event-store-db-node
+      - view-db-mongo
+
+  rabbit-server:
+    image: rabbitmq:3-management
+    hostname: rmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - s6network
+
+  event-store-db-node:
+    image: eventstore/eventstore:latest
+    command: --insecure --enable-atom-pub-over-http #--run-projections=All
+    ports:
+      - 2113:2113
+      - 1113:1113
+    networks:
+      - s6network
+
+  view-db-mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    networks:
+      - s6network
+
+networks:
+  s6network:
