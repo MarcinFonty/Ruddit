@@ -12,9 +12,6 @@ COPY . ./
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
-# Add a new step to list the contents of the out directory
-RUN ls -la out
-
 # Use a lightweight runtime image as the base image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
