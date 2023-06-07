@@ -13,16 +13,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IFeedLogic, FeedLogic>();
 builder.Services.AddTransient<IFeedRepository, FeedRepository>();
 
+// Configure Kestrel to listen on specific address
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(7247);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

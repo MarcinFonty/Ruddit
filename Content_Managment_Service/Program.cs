@@ -6,6 +6,9 @@ using Content_Managment_Service.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using Content_Managment_Service.Logic;
 using System.Reflection;
+using Polly;
+using System.Net.Sockets;
+using RabbitMQ.Client.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +39,28 @@ builder.Services.AddSingleton<IConnection>(sp =>
         DispatchConsumersAsync = true
     };
 
-    return factory.CreateConnection();
+    var retryPolicy = Policy.Handle<SocketException>()
+        .WaitAndRetry(new[]
+        {
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(2),
+            TimeSpan.FromSeconds(3)
+        });
+
+    return retryPolicy.Execute(() =>
+    {
+        while (true)
+        {
+            try
+            {
+                return factory.CreateConnection();
+            }
+            catch (Exception ex) when (ex is SocketException || ex is BrokerUnreachableException)
+            {
+                Console.WriteLine("RabbitMQ Client is trying to connect...");
+            }
+        }
+    });
 });
 
 // Configure Kestrel to listen on specific address

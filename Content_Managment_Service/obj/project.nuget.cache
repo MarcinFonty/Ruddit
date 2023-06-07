@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DUJtEw+PqJI5euRw8oS0tut29h5k2T3T5UjhddcS3ByGEzQlYrx/m8Odt7TTKwS4ezziIEN6zmO6jNDwrw95Sg==",
+  "dgSpecHash": "5X29IuUE4ThM2A6mc2ZFYvnc/mdDkp+9gf5Q38KEIo1RIuAOhX0+QrHxi8b3WMyu2TGMdzvgKS81t6oTJdB79w==",
   "success": true,
   "projectFilePath": "C:\\Users\\School\\Desktop\\School Individueel\\Ruddit\\Content_Managment_Service\\Content_Managment_Service.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\School\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\School\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\School\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\School\\.nuget\\packages\\polly\\7.2.3\\polly.7.2.3.nupkg.sha512",
     "C:\\Users\\School\\.nuget\\packages\\rabbitmq.client\\6.5.0\\rabbitmq.client.6.5.0.nupkg.sha512",
     "C:\\Users\\School\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\School\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",

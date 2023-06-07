@@ -1,5 +1,8 @@
 using Event_Handler_Service.Consumers;
 using RabbitMQ.Client;
+using System.Net.Sockets;
+using Polly;
+using RabbitMQ.Client.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IConnection>(sp =>
 {
-    var factory = new ConnectionFactory() //TODO: Change default credentials and have them as a secret
+    var factory = new ConnectionFactory()
     {
         HostName = "rmq",
         Port = 5672,
@@ -21,7 +24,34 @@ builder.Services.AddSingleton<IConnection>(sp =>
         DispatchConsumersAsync = true
     };
 
-    return factory.CreateConnection();
+    var retryPolicy = Policy.Handle<SocketException>()
+        .WaitAndRetry(new[]
+        {
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(2),
+            TimeSpan.FromSeconds(3)
+        });
+
+    return retryPolicy.Execute(() =>
+    {
+        while (true)
+        {
+            try
+            {
+                return factory.CreateConnection();
+            }
+            catch (Exception ex) when (ex is SocketException || ex is BrokerUnreachableException)
+            {
+                Console.WriteLine("RabbitMQ Client is trying to connect...");
+            }
+        }
+    });
+});
+
+// Configure Kestrel to listen on specific address
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(7152);
 });
 
 var app = builder.Build();
@@ -53,13 +83,10 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
