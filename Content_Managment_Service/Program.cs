@@ -31,7 +31,7 @@ builder.Services.AddSingleton<IConnection>(sp =>
 {
     var factory = new ConnectionFactory() //TODO: Change default credentials and have them as a secret
     {
-        HostName = "localhost",
+        HostName = "rmq",
         Port = 5672,
         UserName = "guest",
         Password = "guest",
