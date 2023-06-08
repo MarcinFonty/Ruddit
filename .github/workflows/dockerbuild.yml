@@ -16,7 +16,8 @@ jobs:
     - name: Build CMS
       uses: docker/build-push-action@v2
       with:
-        context: ./Content_Managment_Service
+        context: .
+        file: ./Content_Managment_Service/Dockerfile
         push: false
 
   build_ehs:
@@ -29,7 +30,8 @@ jobs:
     - name: Build EHS
       uses: docker/build-push-action@v2
       with:
-        context: ./Event_Handler_Service
+        context: .
+        file: ./Event_Handler_Service/Dockerfile
         push: false
 
   build_fs:
@@ -42,5 +44,6 @@ jobs:
     - name: Build FS
       uses: docker/build-push-action@v2
       with:
-        context: ./Feed_Service
+        context: .
+        file: ./Feed_Service/Dockerfile
         push: false
