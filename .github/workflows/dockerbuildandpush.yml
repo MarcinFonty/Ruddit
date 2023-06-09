@@ -23,7 +23,7 @@ jobs:
         context: .
         file: ./Content_Managment_Service/Dockerfile
         push: true
-        tags: <DOCKERHUB_USERNAME>/cms:latest
+        tags: ${{ env.DOCKERHUB_USERNAME }}/cms:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
@@ -59,7 +59,7 @@ jobs:
         context: .
         file: ./Event_Handler_Service/Dockerfile
         push: true
-        tags: <DOCKERHUB_USERNAME>/ehs:latest
+        tags: ${{ env.DOCKERHUB_USERNAME }}/ehs:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
@@ -95,25 +95,3 @@ jobs:
         context: .
         file: ./Feed_Service/Dockerfile
         push: true
-        tags: <DOCKERHUB_USERNAME>/fs:latest
-    - name: Send metrics to DataDog
-      run: |
-        STATUS=$?
-        if [ $STATUS -eq 0 ]; then
-          BUILD_STATUS=1
-        else
-          BUILD_STATUS=0
-        fi
-        curl -X POST -H "Content-type: application/json" \
-        -d '{
-          "series": [
-            {
-              "metric": "fs.build.success",
-              "points": [[$(date +%s), $BUILD_STATUS]],
-              "type": "gauge",
-              "host": "github",
-              "tags": ["github:actions"]
-            }
-          ]
-        }' \
-        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
