@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKERHUB_USERNAME: marcinfonty
-  DOCKERHUB_PASSWORD: Iow0RTtwmu
+  DOCKERHUB_PASSWORD: dckr_pat_EzLl-AB8RduIRySZ4F-bbyD34V8
 
 jobs:
   build_cms:
