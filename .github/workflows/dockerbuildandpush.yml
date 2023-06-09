@@ -1,9 +1,13 @@
-name: Build Docker Images
+name: Build and Push Docker Images
 
 on:
   push:
     branches:
       - main
+
+env:
+  DOCKERHUB_USERNAME: marcinfonty
+  DOCKERHUB_PASSWORD: Iow0RTtwmu
 
 jobs:
   build_cms:
@@ -13,12 +17,13 @@ jobs:
       uses: actions/checkout@v2
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-    - name: Build CMS
+    - name: Build and Push CMS
       uses: docker/build-push-action@v2
       with:
         context: .
         file: ./Content_Managment_Service/Dockerfile
-        push: false
+        push: true
+        tags: <DOCKERHUB_USERNAME>/cms:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
@@ -27,15 +32,18 @@ jobs:
         else
           BUILD_STATUS=0
         fi
-        curl  -X POST -H "Content-type: application/json" \
-        -d "{ \"series\" :
-               [{\"metric\":\"cms.build.success\",
-                 \"points\":[[$(date +%s), $BUILD_STATUS]],
-                 \"type\":\"gauge\",
-                 \"host\":\"github\",
-                 \"tags\":[\"github:actions\"]}
-              ]
-            }" \
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "cms.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
         "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
 
   build_ehs:
@@ -45,12 +53,13 @@ jobs:
       uses: actions/checkout@v2
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-    - name: Build EHS
+    - name: Build and Push EHS
       uses: docker/build-push-action@v2
       with:
         context: .
         file: ./Event_Handler_Service/Dockerfile
-        push: false
+        push: true
+        tags: <DOCKERHUB_USERNAME>/ehs:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
@@ -59,15 +68,18 @@ jobs:
         else
           BUILD_STATUS=0
         fi
-        curl  -X POST -H "Content-type: application/json" \
-        -d "{ \"series\" :
-               [{\"metric\":\"ehs.build.success\",
-                 \"points\":[[$(date +%s), $BUILD_STATUS]],
-                 \"type\":\"gauge\",
-                 \"host\":\"github\",
-                 \"tags\":[\"github:actions\"]}
-              ]
-            }" \
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "ehs.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
         "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
 
   build_fs:
@@ -77,12 +89,13 @@ jobs:
       uses: actions/checkout@v2
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-    - name: Build FS
+    - name: Build and Push FS
       uses: docker/build-push-action@v2
       with:
         context: .
         file: ./Feed_Service/Dockerfile
-        push: false
+        push: true
+        tags: <DOCKERHUB_USERNAME>/fs:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
@@ -91,13 +104,16 @@ jobs:
         else
           BUILD_STATUS=0
         fi
-        curl  -X POST -H "Content-type: application/json" \
-        -d "{ \"series\" :
-               [{\"metric\":\"fs.build.success\",
-                 \"points\":[[$(date +%s), $BUILD_STATUS]],
-                 \"type\":\"gauge\",
-                 \"host\":\"github\",
-                 \"tags\":[\"github:actions\"]}
-              ]
-            }" \
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "fs.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
         "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
