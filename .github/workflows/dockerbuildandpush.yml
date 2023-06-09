@@ -95,7 +95,7 @@ jobs:
         context: .
         file: ./Feed_Service/Dockerfile
         push: true
-        tags: ${{ env.DOCKERHUB_USERNAME }}/ehs:latest
+        tags: ${{ env.DOCKERHUB_USERNAME }}/fs:latest
     - name: Send metrics to DataDog
       run: |
         STATUS=$?
