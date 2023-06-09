@@ -19,7 +19,7 @@ jobs:
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
     - name: Build and Push CMS
       run: |
-        docker build -t ${{ env.DOCKERHUB_USERNAME }}/cms:latest ./Content_Managment_Service
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/cms:latest -f ./Content_Managment_Service/Dockerfile .
         docker push ${{ env.DOCKERHUB_USERNAME }}/cms:latest
     - name: Send metrics to DataDog
       run: |
@@ -52,7 +52,7 @@ jobs:
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
     - name: Build and Push EHS
       run: |
-        docker build -t ${{ env.DOCKERHUB_USERNAME }}/ehs:latest ./Event_Handler_Service
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/ehs:latest -f ./Event_Handler_Service/Dockerfile .
         docker push ${{ env.DOCKERHUB_USERNAME }}/ehs:latest
     - name: Send metrics to DataDog
       run: |
@@ -85,7 +85,7 @@ jobs:
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
     - name: Build and Push FS
       run: |
-        docker build -t ${{ env.DOCKERHUB_USERNAME }}/fs:latest ./Feed_Service
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/fs:latest -f ./Feed_Service/Dockerfile .
         docker push ${{ env.DOCKERHUB_USERNAME }}/fs:latest
     - name: Send metrics to DataDog
       run: |
