@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IConnection>(sp =>
 {
     var factory = new ConnectionFactory()
     {
+        //HostName = "localhost",
         HostName = "rmq",
         Port = 5672,
         UserName = "guest",

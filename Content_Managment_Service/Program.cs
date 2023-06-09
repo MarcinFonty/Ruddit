@@ -23,7 +23,8 @@ builder.Services.AddTransient<IPostLogic, PostLogic>();
 
 builder.Services.AddSingleton<EventStoreClient>(sp =>
 {
-    var settings = EventStoreClientSettings.Create("esdb://127.0.0.1:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000");
+    //var settings = EventStoreClientSettings.Create("esdb://127.0.0.1:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000");
+    var settings = EventStoreClientSettings.Create("esdb://ruddit_event-store-db-node_1:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000");
 
     return new EventStoreClient(settings);
 });
@@ -32,7 +33,8 @@ builder.Services.AddSingleton<IConnection>(sp =>
 {
     var factory = new ConnectionFactory()
     {
-        HostName = "rmq",
+        HostName = "localhost",
+        //HostName = "rmq",
         Port = 5672,
         UserName = "guest",
         Password = "guest",
