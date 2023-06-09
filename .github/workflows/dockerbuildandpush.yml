@@ -95,3 +95,25 @@ jobs:
         context: .
         file: ./Feed_Service/Dockerfile
         push: true
+        tags: ${{ env.DOCKERHUB_USERNAME }}/ehs:latest
+    - name: Send metrics to DataDog
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "fs.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
