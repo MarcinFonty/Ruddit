@@ -20,11 +20,23 @@ jobs:
         file: ./Content_Managment_Service/Dockerfile
         push: false
     - name: Send metrics to DataDog
-      uses: DataDog/github-action-datadog-reporting@v1
-      with:
-        api-key: ${{ secrets.DATADOG_API_KEY }}
-        metrics: |
-          cms.build.success=1
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl  -X POST -H "Content-type: application/json" \
+        -d "{ \"series\" :
+               [{\"metric\":\"cms.build.success\",
+                 \"points\":[[$(date +%s), $BUILD_STATUS]],
+                 \"type\":\"gauge\",
+                 \"host\":\"github\",
+                 \"tags\":[\"github:actions\"]}
+              ]
+            }" \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
 
   build_ehs:
     runs-on: ubuntu-latest
@@ -40,11 +52,23 @@ jobs:
         file: ./Event_Handler_Service/Dockerfile
         push: false
     - name: Send metrics to DataDog
-      uses: DataDog/github-action-datadog-reporting@v1
-      with:
-        api-key: ${{ secrets.DATADOG_API_KEY }}
-        metrics: |
-          ehs.build.success=1
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl  -X POST -H "Content-type: application/json" \
+        -d "{ \"series\" :
+               [{\"metric\":\"ehs.build.success\",
+                 \"points\":[[$(date +%s), $BUILD_STATUS]],
+                 \"type\":\"gauge\",
+                 \"host\":\"github\",
+                 \"tags\":[\"github:actions\"]}
+              ]
+            }" \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
 
   build_fs:
     runs-on: ubuntu-latest
@@ -60,8 +84,20 @@ jobs:
         file: ./Feed_Service/Dockerfile
         push: false
     - name: Send metrics to DataDog
-      uses: DataDog/github-action-datadog-reporting@v1
-      with:
-        api-key: ${{ secrets.DATADOG_API_KEY }}
-        metrics: |
-          fs.build.success=1
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl  -X POST -H "Content-type: application/json" \
+        -d "{ \"series\" :
+               [{\"metric\":\"fs.build.success\",
+                 \"points\":[[$(date +%s), $BUILD_STATUS]],
+                 \"type\":\"gauge\",
+                 \"host\":\"github\",
+                 \"tags\":[\"github:actions\"]}
+              ]
+            }" \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
