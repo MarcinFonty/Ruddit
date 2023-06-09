@@ -1,0 +1,110 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKERHUB_USERNAME: marcinfonty
+  DOCKERHUB_PASSWORD: dckr_pat_EzLl-AB8RduIRySZ4F-bbyD34V8
+
+jobs:
+  build_cms:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Build and Push CMS
+      run: |
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/cms:latest -f ./Content_Managment_Service/Dockerfile .
+        docker push ${{ env.DOCKERHUB_USERNAME }}/cms:latest
+    - name: Send metrics to DataDog
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "cms.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
+
+  build_ehs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Build and Push EHS
+      run: |
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/ehs:latest -f ./Event_Handler_Service/Dockerfile .
+        docker push ${{ env.DOCKERHUB_USERNAME }}/ehs:latest
+    - name: Send metrics to DataDog
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "ehs.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
+
+  build_fs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Build and Push FS
+      run: |
+        docker build -t ${{ env.DOCKERHUB_USERNAME }}/fs:latest -f ./Feed_Service/Dockerfile .
+        docker push ${{ env.DOCKERHUB_USERNAME }}/fs:latest
+    - name: Send metrics to DataDog
+      run: |
+        STATUS=$?
+        if [ $STATUS -eq 0 ]; then
+          BUILD_STATUS=1
+        else
+          BUILD_STATUS=0
+        fi
+        curl -X POST -H "Content-type: application/json" \
+        -d '{
+          "series": [
+            {
+              "metric": "fs.build.success",
+              "points": [[$(date +%s), $BUILD_STATUS]],
+              "type": "gauge",
+              "host": "github",
+              "tags": ["github:actions"]
+            }
+          ]
+        }' \
+        "https://api.datadoghq.com/api/v1/series?api_key=${{ secrets.DATADOG_API_KEY }}"
