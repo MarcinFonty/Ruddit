@@ -1,7 +1,7 @@
 version: '3'
 services:
   s6content-service:
-    image: s6content-service
+    image: marcinfonty/cms:latest
     ports:
       - 7278:7278
     networks:
@@ -12,7 +12,7 @@ services:
       - view-db-mongo
 
   s6event-handler-service:
-    image: s6event-handler-service
+    image: marcinfonty/ehs:latest
     ports:
       - 7152:7152
     networks:
@@ -23,7 +23,7 @@ services:
       - view-db-mongo
 
   s6feed-service:
-    image: s6feed-service
+    image: marcinfonty/fs:latest
     ports:
       - 7247:7247
     networks:
