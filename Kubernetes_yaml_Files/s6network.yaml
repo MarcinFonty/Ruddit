@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: s6-namespace
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s6network
+  namespace: s6-namespace
+spec:
+  selector: {}
+  ports:
+    - name: s6content-service
+      protocol: TCP
+      port: 7278
+      targetPort: 7278
+    - name: s6event-handler-service
+      protocol: TCP
+      port: 7152
+      targetPort: 7152
+    - name: s6feed-service
+      protocol: TCP
+      port: 7247
+      targetPort: 7247

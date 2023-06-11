@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s6feed-service
+  namespace: s6-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s6feed-service
+  template:
+    metadata:
+      labels:
+        app: s6feed-service
+    spec:
+      containers:
+        - name: s6feed-service
+          image: marcinfonty/fs:latest
+          ports:
+            - containerPort: 7247
+          # Add any additional configuration as needed

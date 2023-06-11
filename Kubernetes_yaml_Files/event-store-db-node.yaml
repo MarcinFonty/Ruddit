@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-store-db-node
+  namespace: s6-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-store-db-node
+  template:
+    metadata:
+      labels:
+        app: event-store-db-node
+    spec:
+      containers:
+        - name: event-store-db-node
+          image: eventstore/eventstore:latest
+          args:
+            - "--insecure"
+            - "--run-projections=All"
+            - "--enable-atom-pub-over-http"
+          ports:
+            - containerPort: 2113
+            - containerPort: 1113

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-server
+  namespace: s6-namespace
+spec:
+  selector:
+    app: rabbit-server
+  ports:
+    - name: management
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+    - name: amqp
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit-server
+  namespace: s6-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit-server
+  template:
+    metadata:
+      labels:
+        app: rabbit-server
+    spec:
+      containers:
+        - name: rabbit-server
+          image: rabbitmq:3-management
+          ports:
+            - containerPort: 15672
+            - containerPort: 5672

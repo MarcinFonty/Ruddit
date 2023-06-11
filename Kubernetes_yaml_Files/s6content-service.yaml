@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s6content-service
+  namespace: s6-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s6content-service
+  template:
+    metadata:
+      labels:
+        app: s6content-service
+    spec:
+      containers:
+        - name: s6content-service
+          image: marcinfonty/cms:latest
+          ports:
+            - containerPort: 7278
+          # Add any additional configuration as needed

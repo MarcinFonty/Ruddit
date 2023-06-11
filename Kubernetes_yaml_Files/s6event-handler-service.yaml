@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s6event-handler-service
+  namespace: s6-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s6event-handler-service
+  template:
+    metadata:
+      labels:
+        app: s6event-handler-service
+    spec:
+      containers:
+        - name: s6event-handler-service
+          image: marcinfonty/ehs:latest
+          ports:
+            - containerPort: 7152
+          # Add any additional configuration as needed
