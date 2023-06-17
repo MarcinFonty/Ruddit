@@ -2,6 +2,7 @@
 using Content_Managment_Service.Entity;
 using Content_Managment_Service.Logic;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace Content_Managment_Service.Controllers
 {
@@ -19,13 +20,25 @@ namespace Content_Managment_Service.Controllers
         [HttpPost]
         public IActionResult CreatePost([FromBody] PostDTO postDto)
         {
-            // Map the PostDTO to a PostEntity
+            // Validate inputs
+            if (string.IsNullOrWhiteSpace(postDto.Description) && string.IsNullOrWhiteSpace(postDto.ImagePath))
+            {
+                return BadRequest("At least one of 'Description' or 'ImagePath' must be provided.");
+            }
+
+            // Validate ImagePath format
+            if (!string.IsNullOrWhiteSpace(postDto.ImagePath) && !Uri.IsWellFormedUriString(postDto.ImagePath, UriKind.Absolute))
+            {
+                return BadRequest("Invalid 'ImagePath' format.");
+            }
+
+            // Map the PostDTO to a PostEntity, Escape special Characters and trim
             var postEntity = new PostEntity
             {
-                Title = postDto.Title,
-                Description = postDto.Description,
-                ImagePath = postDto.ImagePath,
-                Author = postDto.Author
+                Title = HttpUtility.HtmlEncode(postDto.Title.Trim()),
+                Description = HttpUtility.HtmlEncode(postDto.Description.Trim()),
+                ImagePath = HttpUtility.HtmlEncode(postDto.ImagePath.Trim()),
+                Author = HttpUtility.HtmlEncode(postDto.Author.Trim())
             };
 
             // Pass the postEntity to the CreatePostLogic method in IPostLogic
