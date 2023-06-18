@@ -39,8 +39,8 @@ namespace Event_Handler_Service.Consumers
             };
 
             // TODO: Handle the received message here
-            var mongoClient = new MongoClient(_configuration["MongoDB:ConnectionString"]);
-            var mongoDatabase = mongoClient.GetDatabase(_configuration["MongoDB:DatabaseName"]);
+            var mongoClient = new MongoClient("mongodb://ruddit_view-db-mongo_1:27017");
+            var mongoDatabase = mongoClient.GetDatabase("view-db-mongo");
 
             var collection = mongoDatabase.GetCollection<PostModel>("Posts");  //TODO: Should have a better way to provide the collection name
             collection.InsertOne(result);
